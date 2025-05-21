@@ -9,10 +9,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "This project is a backend API that checks Ethereum wallet addresses for airdrop eligibility by analyzing transaction history on the Sepolia testnet.",
   "dependencies": {
+    "alchemy-sdk": "^3.5.9",
     "axios": "^1.9.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0"
-  }
+  },
+  "repository": {
+    "type": "module",
+    "url": "git+https://github.com/DemiGodofWeb3/New-Airdrop-Checker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DemiGodofWeb3/New-Airdrop-Checker/issues"
+  },
+  "homepage": "https://github.com/DemiGodofWeb3/New-Airdrop-Checker#readme"
 }

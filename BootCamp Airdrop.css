@@ -1,0 +1,155 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #e0dddd;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url(Image/Bubbles.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Add smooth transition to all elements */
+* {
+  transition: all 0.3s ease;
+}
+
+.container {
+  background: #1e1e1e;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 12px;
+  width: 80%;
+  max-width: 300px;
+  border: none;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+/* Smooth hover effect on input */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 5px #00b894;
+}
+
+button {
+  padding: 12px 20px;
+  background: #00b894;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #019875;
+}
+
+#loading {
+  margin-top: 20px;
+  font-style: italic;
+  color: #1fbe7c;
+}
+
+#result {
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  white-space: pre-line;
+  background: #a3bcda;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+
+  input {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.social-icons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+  z-index: 1000;
+}
+
+.social-icons a {
+  color: #333;
+  font-size: 24px;
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+  color: #1da1f2; /* Twitter Blue */
+  transform: scale(1.2);
+}
+
+.social-icons a {
+  font-size: 24px;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+
+/* Twitter */
+.social-icons a[aria-label="Twitter"] {
+  color: #1da1f2;
+}
+
+/* Discord */
+.social-icons a[aria-label="Discord"] {
+  color: #5865f2;
+}
+
+/* GitHub */
+.social-icons a[aria-label="GitHub"] {
+  color: #333; /* dark grey */
+}
+
+/* Hover Effect */
+.social-icons a:hover {
+  transform: scale(1.2);
+  opacity: 0.8;
+}
+
+.hidden {
+  display: none;
+}

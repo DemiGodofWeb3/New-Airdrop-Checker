@@ -1,34 +1,54 @@
+require("dotenv").config();
 const express = require("express");
-const axios = require("axios");
 const cors = require("cors");
+const { Alchemy, Network } = require("alchemy-sdk");
 
 const app = express();
-const PORT = 3000;
-const ETHERSCAN_API_KEY = "M0GFnI5xz_6QFdnSyTmVLbYOhQmhgE5j";
-
 app.use(cors());
 
+const config = {
+  apiKey: process.env.ALCHEMY_API_KEY,
+  network: Network.ETH_SEPOLIA,
+};
+
+const alchemy = new Alchemy(config);
+
 app.get("/check-eligibility", async (req, res) => {
-  const address = req.query.address;
-  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
-    return res.status(400).json({ error: "Invalid address" });
-  }
+  const address = req.query.address.toLowerCase();
 
   try {
-    const url = `https://api-sepolia.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${ETHERSCAN_API_KEY}`;
-    const response = await axios.get(url);
+    const [sentTxns, receivedTxns] = await Promise.all([
+      alchemy.core.getAssetTransfers({
+        fromBlock: "0x0",
+        toBlock: "latest",
+        fromAddress: address,
+        category: ["external"],
+      }),
+      alchemy.core.getAssetTransfers({
+        fromBlock: "0x0",
+        toBlock: "latest",
+        toAddress: address,
+        category: ["external"],
+      }),
+    ]);
 
-    if (response.data.status !== "1") {
-      return res.status(404).json({ error: "No transactions found" });
-    }
+    const sentCount = sentTxns.transfers.length;
+    const receivedCount = receivedTxns.transfers.length;
+    const totalCount = sentCount + receivedCount;
 
-    const txCount = response.data.result.length;
-    res.json({ txCount, eligible: txCount >= 500 });
+    const response = {
+      eligible: totalCount >= 200,
+      sentCount,
+      receivedCount,
+      totalCount,
+    };
+
+    res.json(response);
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    console.error("Error checking transactions:", err);
+    res.status(500).json({ error: "Error checking eligibility" });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
