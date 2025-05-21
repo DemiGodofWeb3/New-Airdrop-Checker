@@ -32,3 +32,21 @@ document
       loading.classList.add("hidden");
     }
   });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const lightBtn = document.getElementById("light-mode-btn");
+  const darkBtn = document.getElementById("dark-mode-btn");
+
+  const setTheme = (theme) => {
+    document.body.classList.toggle("dark-mode", theme === "dark");
+    localStorage.setItem("theme", theme);
+  };
+
+  // Load saved theme
+  const savedTheme = localStorage.getItem("theme") || "light";
+  setTheme(savedTheme);
+
+  // Event listeners
+  lightBtn.addEventListener("click", () => setTheme("dark"));
+  darkBtn.addEventListener("click", () => setTheme("light"));
+});
